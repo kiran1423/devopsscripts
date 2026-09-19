@@ -22,8 +22,8 @@ wget https://github.com/kubernetes/kops/releases/download/v1.32.0/kops-linux-amd
 chmod +x kops-linux-amd64 kubectl
 mv kubectl /usr/local/bin/kubectl
 mv kops-linux-amd64 /usr/local/bin/kops
-aws s3api create-bucket --bucket kiran-kops-testbkt.k8s.local --region us-east-1 --create-bucket-configuration LocationConstraint=us-east-1
-aws s3api put-bucket-versioning --bucket kiran-kops-testbkt.k8s.local --region us-east-1 --versioning-configuration Status=Enabled
+aws s3api create-bucket --bucket kiran-kops-testbkt.k8s.local --region us-east-1
+aws s3api put-bucket-versioning --bucket kiran-kops-testbkt.k8s.local --versioning-configuration Status=Enabled
 export KOPS_STATE_STORE=s3://kiran-kops-testbkt.k8s.local
 kops create cluster --name=kiran.k8s.local --zones=us-east-1a --control-plane-count=1 --control-plane-size=t3.small --node-count=1 --node-size=t3.medium --node-volume-size=15 --control-plane-volume-size=15 --ssh-public-key=my-key.pub --image=ami-02d26659fd82cf299 --networking=calico --topology=public
 kops update cluster --name kiran.k8s.local --yes --admin
